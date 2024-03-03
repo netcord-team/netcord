@@ -22,8 +22,7 @@ module.exports = {
 	once: false,
 	run: async (client, message) => {
     guilds.load()
-	
-if (message.author.id === "1201104664662396951") return
+		if (message.author.id === "1201104664662396951") return;
                                    const userTag = message.author.username;
 		if (message.content.startsWith(prefix)) {
 			if (message.author.bot) return;
