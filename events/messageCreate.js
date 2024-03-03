@@ -6,6 +6,9 @@ var guilds = new Store({
   debounce: 0
 })
 
+
+if (message.author.id === "ID di evan") return
+
 const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
