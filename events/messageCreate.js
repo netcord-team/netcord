@@ -53,6 +53,7 @@ module.exports = {
           const ircEmbed = new MessageEmbed()
                                           .setColor(DefaultEmbedColor)
 		      .setFooter({ text: msg.guild.name, iconURL: msg.guild.iconURL() })
+                                          .setDescription(`${msg}`)
 		      .setTimestamp()
 		      .setAuthor({ name: userTag, iconURL: msg.author.displayAvatarURL() });
 
