@@ -5,6 +5,6 @@ module.exports = {
 	once: false,
 	run: (client) => {
 		console.log("Bot is being rate limited!");
-    console.log("The bot have been ratelimited!")
+    console.log("The bot has been ratelimited!")
 	}
 }
