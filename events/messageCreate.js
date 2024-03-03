@@ -6,9 +6,6 @@ var guilds = new Store({
   debounce: 0
 })
 
-
-if (message.author.id === "ID di evan") return
-
 const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
@@ -25,6 +22,8 @@ module.exports = {
 	once: false,
 	run: async (client, message) => {
     guilds.load()
+	
+if (message.author.id === "1201104664662396951") return
                                    const userTag = message.author.username;
 		if (message.content.startsWith(prefix)) {
 			if (message.author.bot) return;
