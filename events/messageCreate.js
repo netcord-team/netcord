@@ -16,23 +16,15 @@ const prefix = "nc?"
 const ownerId = "1189290335000592506";
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const DefaultEmbedColor = 0x2054C4
+const bannedUsers = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'bannedUsers.json'), 'utf8'));
+
 
 module.exports = {
 	name: "messageCreate",
 	once: false,
 	run: async (client, message) => {
     guilds.load()
-		if (message.author.id === "1201104664662396951") return;
-		if (message.author.id === "1214153050747305994") return;
-		if (message.author.id === "1002218111455477851") return;
-		if (message.author.id === "1211394295211360256") return;
-		if (message.author.id === "1015940443244073031") return;
-		if (message.author.id === "832360287855312946") return;
-		if (message.author.id === "1187444446166519909") return;
-		if (message.author.id === "1187033632334942311") return;
-		if (message.author.id === "1200835000988344444") return;
-		if (message.author.id === "461502965346336778") return;
-		if (message.author.id === "1143095282628825118") return;
+		if (bannedUsers.bannedIDs.includes(message.author.id)) return;
                                    const userTag = message.author.username;
 		if (message.content.startsWith(prefix)) {
 			if (message.author.bot) return;
