@@ -32,7 +32,7 @@ for (const file of eventFiles) {
 	if (event.once) client.once(event.name, (...args) => event.run(client, ...args))
 	else client.on(event.name, (...args) => event.run(client, ...args));
 }
-
+require('./guilded.js')
 client.commands = new Map();
 
 const commandFiles = fs.readdirSync("./commands").filter(f => f.endsWith(".js"));
