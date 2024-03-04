@@ -1,6 +1,6 @@
 module.exports = {
 	name: "setup_guilded",
-	run: (client, message, args) => {
+	execute: (client, message, args) => {
     if (DISABLED) {
       return message.reply("Command disabled for further use. Ask the administrators or owners of this bot to add your server until we fix some bugs with this command.")
     }
