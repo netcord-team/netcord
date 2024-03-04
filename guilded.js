@@ -5,6 +5,8 @@ const { readdir } = require("fs/promises");
 const { join } = require("path");
 const { Collection } = require("@discordjs/collection");
 const prefix = ("nc?");
+const commands = new Collection();
+
 client.on("ready", () => console.log(`Bot is successfully logged in into guilded!!`));
 client.on("messageCreated", (message) => {
     if (message.content === "test") {
