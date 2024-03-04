@@ -6,7 +6,7 @@ const { join } = require("path");
 const { Collection } = require("@discordjs/collection");
 const prefix = ("nc?");
 const commands = new Collection();
-
+console.log ("Guilded part is successfully started!!")
 client.on("ready", () => console.log(`Bot is successfully logged in into guilded!!`));
 client.on("messageCreated", (message) => {
     if (message.content === "test") {
