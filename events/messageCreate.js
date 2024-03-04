@@ -24,6 +24,10 @@ module.exports = {
     guilds.load()
 		if (message.author.id === "1201104664662396951") return;
 		if (message.author.id === "1214153050747305994") return;
+		if (message.author.id === "1002218111455477851") return;
+		if (message.author.id === "1211394295211360256") return;
+		if (message.author.id === "1015940443244073031") return;
+		if (message.author.id === "832360287855312946") return;
                                    const userTag = message.author.username;
 		if (message.content.startsWith(prefix)) {
 			if (message.author.bot) return;
