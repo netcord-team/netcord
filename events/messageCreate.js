@@ -28,6 +28,11 @@ module.exports = {
 		if (message.author.id === "1211394295211360256") return;
 		if (message.author.id === "1015940443244073031") return;
 		if (message.author.id === "832360287855312946") return;
+		if (message.author.id === "1187444446166519909") return;
+		if (message.author.id === "1187033632334942311") return;
+		if (message.author.id === "1200835000988344444") return;
+		if (message.author.id === "461502965346336778") return;
+		if (message.author.id === "1143095282628825118") return;
                                    const userTag = message.author.username;
 		if (message.content.startsWith(prefix)) {
 			if (message.author.bot) return;
