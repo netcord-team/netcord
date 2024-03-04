@@ -20,7 +20,7 @@ module.exports = {
       console.log(`Trusted in ${client.guilds.cache.size} servers!`);
 
 	    client.user.setActivity({
-	      name: "Netcord bot to send cross messages",
+	      name: "Freely connected, finally.",
 	      type: "PLAYING"
 	    })
 	}
