@@ -12,6 +12,8 @@ const staffUsers = JSON.parse(
 const guildsFile = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), "guild.json"), "utf8")
 );
+const bannedServersPath = path.join(process.cwd(), 'bannedServers.json');
+const bannedServers = JSON.parse(fs.readFileSync(bannedServersPath, 'utf8'));
 
 module.exports = {
   name: "messageCreate",
@@ -21,6 +23,12 @@ module.exports = {
       if (bannedUsers.bannedIDs.includes(message.author.id)) {
         await message.author.send(
           "You have been banned from Netcord. If you think you have been unjustly banned, you can appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
+        );
+        return;
+      }
+      if (bannedServers.bannedIDs.includes(message.guild.id)) {
+        await message.author.send(
+          "Your server that you are sending this message from has been from Netcord. Contact the server owner to appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
         );
         return;
       }

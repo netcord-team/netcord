@@ -5,6 +5,9 @@ const fs = require("fs");
 const path = require("path");
 const { Store } = require("data-store");
 const guildsFilePath = path.join(process.cwd(), "guild.json");
+const guildsFile = JSON.parse(
+  fs.readFileSync(path.join(process.cwd(), "guild.json"), "utf8")
+);
 
 const DISABLED = false;
 
@@ -31,7 +34,9 @@ module.exports = {
     else {
       if (isNaN(parseFloat(channelID)))
         return message.reply({ content: "That's not a valid channel." });
-      
+      if (guildsFile.channels.includes(message.channel.id) == channelID) {
+        return message.reply({ content: "Your server is already set up!" });
+      }
       // Read guilds data from the file
       let guildsData = {};
       try {
