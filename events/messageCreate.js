@@ -20,19 +20,6 @@ module.exports = {
   once: false,
   run: async (client, message) => {
     try {
-      if (bannedUsers.bannedIDs.includes(message.author.id)) {
-        await message.author.send(
-          "You have been banned from Netcord. If you think you have been unjustly banned, you can appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
-        );
-        return;
-      }
-      if (bannedServers.bannedIDs.includes(message.guild.id)) {
-        await message.author.send(
-          "Your server that you are sending this message from has been from Netcord. Contact the server owner to appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
-        );
-        return;
-      }
-
       if (message.content.startsWith(prefix)) {
         if (message.author.bot) return;
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -62,6 +49,18 @@ module.exports = {
 
       console.log("Message recieved!");
       const username = message.author.username;
+      if (bannedUsers.bannedIDs.includes(message.author.id)) {
+        await message.author.send(
+          "You have been banned from Netcord. If you think you have been unjustly banned, you can appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
+        );
+        return;
+      }
+      if (bannedServers.bannedIDs.includes(message.guild.id)) {
+        await message.author.send(
+          "Your server that you are sending this message from has been from Netcord. Contact the server owner to appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
+        );
+        return;
+      }
       message.delete();
       if (staffUsers.ownerID.includes(message.author.id)) { // Bit of a hacky solution for badges, this should be changed, also make sure to update every one when the embed code gets changed
         channel.forEach(async (channel) => {
