@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const { MessageEmbed, Permissions } = require("discord.js");
-const prefix = "ncb?";
+const prefix = "nc?";
 
 const bannedUsers = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), "bannedUsers.json"), "utf8")
