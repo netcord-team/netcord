@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const { MessageEmbed, Permissions } = require("discord.js");
-const prefix = "nc?";
+const prefix = "ncb?";
 
 const bannedUsers = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), "bannedUsers.json"), "utf8")
@@ -36,6 +36,10 @@ module.exports = {
       const channelID = message.channel.id;
       const attachment = message.attachments.first();
       const attachmentUrl = attachment ? attachment.url : null;
+      const isVideo = attachment && attachment.url.endsWith('.mp4');
+      const isImage = attachment && (attachment.url.endsWith('.png') || attachment.url.endsWith('.jpg') || attachment.url.endsWith('.jpeg') || attachment.url.endsWith('.gif'));
+      const videoAttachmentMessage = videoMessage(message.author.id);
+      const badge = determineStaffRole(message.author.id, isVideo);
       if (!guildsFile.channels.includes(channelID)) return;
       if (message.reference && message.reference.messageID) {
         const repliedMessage = await message.channel.messages.fetch(message.reference.messageID); // reply test can someone get this to work
@@ -62,102 +66,49 @@ module.exports = {
         return;
       }
       message.delete();
-      if (staffUsers.ownerID.includes(message.author.id)) { // Bit of a hacky solution for badges, this should be changed, also make sure to update every one when the embed code gets changed
-        channel.forEach(async (channel) => {
-          if (!channel) return;
-          const crossGuildEmbed = new MessageEmbed()
-            .setColor(5793266)
-            .setFooter({
-              text: message.guild.name + " • Netcord Stable",
-              iconURL: message.guild.iconURL(),
-            })
-            .setDescription(message.content)
-            .setImage(attachmentUrl)
-            .setThumbnail(
-              "https://cdn.discordapp.com/icons/1213558508398579742/d73f54243a2f8b70389ee671ff138421.webp?size=48"
-            )
-            .setTimestamp()
-            .setAuthor({
-              name:
-                message.author.displayName + " (" + username + ")" + " [👑]",
-              iconURL: message.author.displayAvatarURL(),
-            });
-          await channel.send({ embeds: [crossGuildEmbed] });
-        });
-        return;
-      }
-      if (staffUsers.teamIDs.includes(message.author.id)) {
-        channel.forEach(async (channel) => {
-          if (!channel) return;
-          const crossGuildEmbed = new MessageEmbed()
-            .setColor(5793266)
-            .setFooter({
-              text: message.guild.name + " • Netcord Stable",
-              iconURL: message.guild.iconURL(),
-            })
-            .setDescription(message.content)
-            .setImage(attachmentUrl)
-            .setThumbnail(
-              "https://cdn.discordapp.com/icons/1213558508398579742/d73f54243a2f8b70389ee671ff138421.webp?size=48"
-            )
-            .setTimestamp()
-            .setAuthor({
-              name:
-                message.author.displayName + " (" + username + ")" + " [💻]",
-              iconURL: message.author.displayAvatarURL(),
-            });
-          await channel.send({ embeds: [crossGuildEmbed] });
-        });
-        return;
-      }
-      if (staffUsers.staffIDs.includes(message.author.id)) {
-        channel.forEach(async (channel) => {
-          if (!channel) return;
-          const crossGuildEmbed = new MessageEmbed()
-            .setColor(5793266)
-            .setFooter({
-              text: message.guild.name + " • Netcord Stable",
-              iconURL: message.guild.iconURL(),
-            })
-            .setDescription(message.content)
-            .setImage(attachmentUrl)
-            .setThumbnail(
-              "https://cdn.discordapp.com/icons/1213558508398579742/d73f54243a2f8b70389ee671ff138421.webp?size=48"
-            )
-            .setTimestamp()
-            .setAuthor({
-              name:
-                message.author.displayName + " (" + username + ")" + " [🔨]",
-              iconURL: message.author.displayAvatarURL(),
-            });
-          await channel.send({ embeds: [crossGuildEmbed] });
-        });
-        return; 
-      } else {
-        channel.forEach(async (channel) => {
-          if (!channel) return;
-          const crossGuildEmbed = new MessageEmbed()
-            .setColor(5793266)
-            .setFooter({
-              text: message.guild.name + " • Netcord Stable",
-              iconURL: message.guild.iconURL(),
-            })
-            .setDescription(message.content)
-            .setImage(attachmentUrl)
-            .setThumbnail(
-              "https://cdn.discordapp.com/icons/1213558508398579742/d73f54243a2f8b70389ee671ff138421.webp?size=48"
-            )
-            .setTimestamp()
-            .setAuthor({
-              name: message.author.displayName + " (" + username + ")",
-              iconURL: message.author.displayAvatarURL(),
-            });
-          await channel.send({ embeds: [crossGuildEmbed] });
-        });
-        return;
-      }
-    } catch (error) {
+      channel.forEach(async (channel) => {
+        if (!channel) return;
+        const crossGuildEmbed = new MessageEmbed()
+          .setColor(5793266)
+          .setFooter({
+            text: message.guild.name + " • Netcord Stable",
+            iconURL: message.guild.iconURL(),
+          })
+          .setDescription(message.content + videoAttachmentMessage)
+          .setImage(attachmentUrl)
+          .setThumbnail(
+            "https://cdn.discordapp.com/icons/1213558508398579742/d73f54243a2f8b70389ee671ff138421.webp?size=48"
+          )
+          .setTimestamp()
+          .setAuthor({
+            name: message.author.displayName + " (" + username + ")" + badge,
+            iconURL: message.author.displayAvatarURL(),
+          });
+        await channel.send({ embeds: [crossGuildEmbed] });
+      });
+      return;
+    }
+    catch (error) {
       console.error("An error occurred in the messageCreate event:", error);
     }
   },
 };
+
+function determineStaffRole(userID) {
+  if (staffUsers.ownerID.includes(userID)) {
+    return " [👑]";
+  } else if (staffUsers.teamIDs.includes(userID)) {
+    return " [💻]";
+  } else if (staffUsers.staffIDs.includes(userID)) {
+    return " [🔨]";
+  } else {
+    return "";
+  }
+}
+function videoMessage(videoURL, isVideo) {
+  if (isVideo) {
+    return "\n\nThis message contains a video attachment. To view it, download it from";
+  } else {
+    return "";
+  }
+}
