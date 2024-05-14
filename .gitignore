@@ -1,3 +1,6 @@
 node_modules
 .env
 config.json
+bannedUsers_private.json
+guild_private.json
+commands

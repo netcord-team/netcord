@@ -61,7 +61,7 @@ module.exports = {
       }
       if (bannedServers.bannedIDs.includes(message.guild.id)) {
         await message.author.send(
-          "Your server that you are sending this message from has been from Netcord. Contact the server owner to appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
+          "Your server that you are sending this message from has been banned from Netcord. Contact the server owner to appeal in our ban appeal server: https://discord.gg/DFAApNkuZA"
         );
         return;
       }
